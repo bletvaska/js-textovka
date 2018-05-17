@@ -51,8 +51,10 @@
 
     <div class="row">
       <div class="col">
-        <main></main>
         <input class="form-control">
+        <main>
+          <p>Túto peckovú hru vytvoril na mocnom JavaScriptovom kurze mirek (c)2018</p>
+        </main>
       </div>
     </div>
   </div>
@@ -66,30 +68,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
     crossorigin="anonymous"></script>
 
-  <script>
-    alert('Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.');
-    var cmd = prompt('Co urobis? ').toUpperCase().trim();
-
-    switch(cmd){
-      case 'O HRE': {
-        alert('Tuto mocnu pecku vytvoril peckovy javastripter mire(c) z kosi(c) 2018.');
-        break;
-      }
-
-      case 'KUCHYNKA': {
-          alert('Vitaj v kuchynke neobmedzenych v mikrovlnke pripravovanych pochutin. Ti narocnejsi si mozu vybrat aj nieco z dnesnej ponuky chladnicky.');
-          break;
-      }
-
-      case 'BERNOLAK': {
-          alert('Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.');
-      }
-
-      default: {
-        alert('Tam sa neda ist.');
-      }
-    }
-  </script>
+  <script src="js/adventure.js"></script>
 </body>
 
 </html>
