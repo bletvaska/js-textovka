@@ -1,8 +1,25 @@
 let main = $("main");
 let input = $("input");
 
-function showRoom(room) {
-    main.html("<p>");
+function showInventory(backpack) {
+    if (backpack.items.length === 0) {
+        main.append("Batoh je prázdny.</br>");
+    } else {
+        main.append("V batohu máš:</br>");
+        let ul = $("<ul>");
+        for (let item of backpack.items) {
+            ul.append(`<li>${item.name}</li>`);
+        }
+        main.append(ul);
+    }
+}
+
+function showRoom(room, clear = true) {
+    if (clear === true) {
+        main.html("");
+    }
+
+    main.append("<p>");
     main.append(`${room.description}</br>`);
 
     main.append("Možné východy:");
@@ -26,13 +43,13 @@ function showRoom(room) {
     main.append("</p>");
 }
 
-function describeItem(room, name) {
+function describeItem(room, name, inventory) {
     // if no name is provided
     if (typeof name === "undefined") {
         main.append("Nerozumiem, čo chceš preskúmať.");
     } else {
         // search for an item in room items
-        for (let item of room.items) {
+        for (let item of room.items.concat(inventory.items)) {
             if (item.name.toUpperCase() === name) {
                 main.append(item.description);
                 return;
@@ -41,6 +58,64 @@ function describeItem(room, name) {
 
         // if not found
         main.append("Taký predmet tu nikde nevidím.");
+    }
+}
+
+function takeItem(room, name, inventory) {
+    // if no name is provided
+    if (typeof name === "undefined") {
+        main.append("Neviem, aký predmet chceš vziať.</br>");
+    } else {
+        // search for an item in room items
+        let item = room.items.find(function(item) {
+            if (item.name.toUpperCase() === name) {
+                return item;
+            }
+        });
+
+        // if not found
+        if (typeof item === "undefined") {
+            main.append("Taký predmet tu nikde nevidím.</br>");
+            return;
+        }
+
+        // if full backpack
+        if (inventory.capacity <= inventory.items.length) {
+            main.append("Batoh je plný.</br>");
+            return;
+        }
+
+        // take item
+        inventory.items.push(item);
+        room.items.splice(room.items.indexOf(item), 1);
+
+        main.append(`Do batohu si vlozil predmet ${item.name}</br>`);
+    }
+}
+
+function dropItem(room, name, inventory) {
+    // if no name is provided
+    if (typeof name === "undefined") {
+        main.append("Neviem, aký predmet chceš položiť.</br>");
+    } else {
+        // search for an item in inventory items
+        let item = inventory.items.find(function(item) {
+            if (item.name.toUpperCase() === name) {
+                return item;
+            }
+        });
+
+        // if not found
+        if (typeof item === "undefined") {
+            main.append("Taký predmet pri sebe nemáš.</br>");
+            return;
+        }
+
+        // drop item
+        inventory.items.splice(inventory.items.indexOf(item), 1);
+        room.items.push(item);
+
+        main.append(`Do miestnosti si položil predmet ${item.name}</br>`);
     }
 }
 
@@ -78,7 +153,16 @@ let world = {
 
 let currentRoom = "bernolak";
 
-showRoom(world[currentRoom]);
+let Backpack = {};
+Backpack.capacity = 3;
+Backpack.items = [
+    {
+        name: "telefen",
+        description: "Mobilný telefón značky Samsung. Aj s podvozkom."
+    }
+];
+
+showRoom(world[currentRoom], false);
 
 $("input").on("keyup", function(event) {
     if (event.keyCode === 13) {
@@ -92,9 +176,17 @@ $("input").on("keyup", function(event) {
             );
         } else if (command === "ROZHLIADNI SA") {
             showRoom(world[currentRoom]);
+        } else if (command === "INVENTAR") {
+            showInventory(Backpack);
         } else if (command.startsWith("PRESKUMAJ")) {
             let param = command.split("PRESKUMAJ ")[1];
-            describeItem(world[currentRoom], param);
+            describeItem(world[currentRoom], param, Backpack);
+        } else if (command.startsWith("VEZMI")) {
+            let param = command.split("VEZMI ")[1];
+            takeItem(world[currentRoom], param, Backpack);
+        } else if (command.startsWith("POLOZ")) {
+            let param = command.split("POLOZ ")[1];
+            dropItem(world[currentRoom], param, Backpack);
         } else {
             command = command.toLowerCase();
             if (world[currentRoom].exits.indexOf(command) > -1) {
