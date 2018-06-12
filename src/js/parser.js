@@ -1,7 +1,21 @@
-import { cmdAbout, cmdInventory, cmdLookAround } from "./command.js";
+import {
+    cmdAbout,
+    cmdInventory,
+    cmdLookAround,
+    cmdDescribe,
+    cmdTakeItem,
+    cmdDropItem
+} from "./command.js";
 
 function Parser() {
-    this.commands = [cmdAbout, cmdInventory, cmdLookAround];
+    this.commands = [
+        cmdAbout,
+        cmdInventory,
+        cmdLookAround,
+        cmdDescribe,
+        cmdTakeItem,
+        cmdDropItem
+    ];
 }
 
 Parser.prototype.parse = function(line) {
@@ -9,6 +23,7 @@ Parser.prototype.parse = function(line) {
 
     for (const cmd of this.commands) {
         if (inputLine.startsWith(cmd.name)) {
+            cmd.param = inputLine.split(`${cmd.name} `)[1];
             return cmd;
         }
     }
