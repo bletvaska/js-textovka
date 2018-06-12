@@ -1,4 +1,5 @@
 import { Room } from "./room.js";
+import { itemCup, itemPhone, itemCoffeMachine } from "./items.js";
 
 const game = {
     world: {
@@ -6,19 +7,14 @@ const game = {
             "bernolak",
             "Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.",
             ["kuchynka"],
-            [
-                {
-                    name: "salka",
-                    description:
-                        "Fialová šálka s nápisom NESS. Úplne ideálna na kávej."
-                }
-            ]
+            [itemCup]
         ),
 
         kuchynka: new Room(
             "kuchynka",
             "Vitaj v kuchynke neobmedzenych v mikrovlnke pripravovanych pochutin. Ti narocnejsi si mozu vybrat aj nieco z dnesnej ponuky chladnicky.",
-            ["bernolak", "toalety"]
+            ["bernolak", "toalety"],
+            [itemCoffeMachine]
         ),
 
         toalety: new Room(
@@ -30,12 +26,7 @@ const game = {
 
     inventory: {
         capacity: 3,
-        items: [
-            {
-                name: "telefen",
-                description: "Mobilný telefón značky Samsung. Aj s podvozkom."
-            }
-        ]
+        items: [itemPhone]
     },
 
     currentRoom: "bernolak"

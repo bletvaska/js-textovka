@@ -15,7 +15,13 @@ $(document).ready(function() {
 
             let cmd = parser.parse(command);
             if (cmd === null) {
-                main.append("Taky prikaz nepoznam.");
+                command = command.toLowerCase();
+                if (game.world[game.currentRoom].exits.indexOf(command) > -1) {
+                    game.currentRoom = command;
+                    game.world[game.currentRoom].showRoom();
+                } else {
+                    main.append("<p>Taký príkaz nepoznám.</p>");
+                }
             } else {
                 cmd.exec(game);
             }
