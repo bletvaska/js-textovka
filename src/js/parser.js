@@ -4,7 +4,8 @@ import {
     cmdLookAround,
     cmdDescribe,
     cmdTakeItem,
-    cmdDropItem
+    cmdDropItem,
+    cmdUseItem
 } from "./command.js";
 
 function Parser() {
@@ -14,7 +15,8 @@ function Parser() {
         cmdLookAround,
         cmdDescribe,
         cmdTakeItem,
-        cmdDropItem
+        cmdDropItem,
+        cmdUseItem
     ];
 }
 

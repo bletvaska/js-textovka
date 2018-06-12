@@ -136,4 +136,35 @@ cmdDropItem.exec = function(game) {
     }
 };
 
-// export { cmdAbout, cmdLookAround, cmdInventory, cmdDescribe };
+export const cmdUseItem = new Command(
+    "POUZI",
+    "Vyberie predmet z batohu a položí ho do miestnosti."
+);
+cmdUseItem.exec = function(game) {
+    const main = $("main");
+
+    // if no name is provided
+    if (typeof this.param === "undefined") {
+        main.append("Neviem, aký predmet chceš použiť.</br>");
+    } else {
+        const room = game.world[game.currentRoom];
+
+        // search for an item in inventory and room
+        const name = this.param;
+        const items = game.inventory.items.concat(room.items);
+        let item = items.find(function(item) {
+            if (item.name.toUpperCase() === name) {
+                return item;
+            }
+        });
+
+        // if not found
+        if (typeof item === "undefined") {
+            main.append("Taký predmet tu nikde nevidím.</br>");
+            return;
+        }
+
+        // use item
+        item.use(game);
+    }
+};
