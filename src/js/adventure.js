@@ -5,7 +5,7 @@ $(document).ready(function() {
     let main = $("main");
     let input = $("input");
 
-    game.world[game.currentRoom].showRoom(false);
+    game.currentRoom.showRoom(false);
     const parser = new Parser();
 
     $("input").on("keyup", function(event) {
@@ -16,9 +16,9 @@ $(document).ready(function() {
             let cmd = parser.parse(command);
             if (cmd === null) {
                 command = command.toLowerCase();
-                if (game.world[game.currentRoom].exits.indexOf(command) > -1) {
-                    game.currentRoom = command;
-                    game.world[game.currentRoom].showRoom();
+                if (game.currentRoom._exits.indexOf(command) > -1) {
+                    game.currentRoom = game.world[command];
+                    game.currentRoom.showRoom();
                 } else {
                     main.append("<p>Taký príkaz nepoznám.</p>");
                 }

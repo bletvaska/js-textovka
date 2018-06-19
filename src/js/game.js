@@ -1,5 +1,7 @@
 import { Room } from "./room.js";
-import { itemCup, itemPhone, itemCoffeMachine } from "./items.js";
+import { Cup } from "./items/cup.js";
+import { CoffeMachine } from "./items/coffemachine.js";
+import { Phone } from "./items/phone.js";
 
 const game = {
     world: {
@@ -7,14 +9,14 @@ const game = {
             "bernolak",
             "Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.",
             ["kuchynka"],
-            [itemCup]
+            [new Cup()]
         ),
 
         kuchynka: new Room(
             "kuchynka",
             "Vitaj v kuchynke neobmedzenych v mikrovlnke pripravovanych pochutin. Ti narocnejsi si mozu vybrat aj nieco z dnesnej ponuky chladnicky.",
             ["bernolak", "toalety"],
-            [itemCoffeMachine]
+            [new CoffeMachine()]
         ),
 
         toalety: new Room(
@@ -26,10 +28,12 @@ const game = {
 
     inventory: {
         capacity: 3,
-        items: [itemPhone]
+        items: [new Phone()]
     },
 
-    currentRoom: "bernolak"
+    currentRoom: null
 };
+
+game.currentRoom = game.world["bernolak"];
 
 export { game };

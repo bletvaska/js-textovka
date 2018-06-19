@@ -1,36 +1,34 @@
-import {
-    cmdAbout,
-    cmdInventory,
-    cmdLookAround,
-    cmdDescribe,
-    cmdTakeItem,
-    cmdDropItem,
-    cmdUseItem
-} from "./command.js";
+import { About } from "./commands/about.js";
+import { LookAround } from "./commands/lookaround.js";
+import { Inventory } from "./commands/inventory.js";
+import { Describe } from "./commands/describe.js";
+import { TakeItem } from "./commands/takeitem.js";
+import { DropItem } from "./commands/dropitem.js";
+import { UseItem } from "./commands/useitem.js";
 
-function Parser() {
-    this.commands = [
-        cmdAbout,
-        cmdInventory,
-        cmdLookAround,
-        cmdDescribe,
-        cmdTakeItem,
-        cmdDropItem,
-        cmdUseItem
-    ];
-}
-
-Parser.prototype.parse = function(line) {
-    const inputLine = line.trim().toUpperCase();
-
-    for (const cmd of this.commands) {
-        if (inputLine.startsWith(cmd.name)) {
-            cmd.param = inputLine.split(`${cmd.name} `)[1];
-            return cmd;
-        }
+class Parser {
+    constructor() {
+        this.commands = [
+            new About(),
+            new Inventory(),
+            new LookAround(),
+            new Describe(),
+            new TakeItem(),
+            new DropItem(),
+            new UseItem()
+        ];
     }
+    parse(line) {
+        const inputLine = line.trim().toUpperCase();
 
-    return null;
-};
+        for (const cmd of this.commands) {
+            if (inputLine.startsWith(cmd._name)) {
+                cmd._param = inputLine.split(`${cmd._name} `)[1];
+                return cmd;
+            }
+        }
+        return null;
+    }
+}
 
 export { Parser };
