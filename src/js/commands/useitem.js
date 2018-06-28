@@ -29,6 +29,9 @@ export class UseItem extends Command {
                 return;
             }
 
+            // save to history first
+            game.history.push(`${this._name} ${this._param}`);
+
             // use item
             item.use(game);
         }

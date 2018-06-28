@@ -3,37 +3,41 @@ import { Cup } from "./items/cup.js";
 import { CoffeMachine } from "./items/coffemachine.js";
 import { Phone } from "./items/phone.js";
 
-const game = {
-    world: {
-        bernolak: new Room(
-            "bernolak",
-            "Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.",
-            ["kuchynka"],
-            [new Cup()]
-        ),
+export class Game {
+    constructor() {
+        this.initGame();
+    }
 
-        kuchynka: new Room(
-            "kuchynka",
-            "Vitaj v kuchynke neobmedzenych v mikrovlnke pripravovanych pochutin. Ti narocnejsi si mozu vybrat aj nieco z dnesnej ponuky chladnicky.",
-            ["bernolak", "toalety"],
-            [new CoffeMachine()]
-        ),
+    initGame() {
+        this.world = {
+            bernolak: new Room(
+                "bernolak",
+                "Nachadzas sa v skoliacej miestnosti Anton Bernolak (bez Antona Bernolaka). Volne pohodene pocitace a svietiaci projektor nevestia nic dobre.",
+                ["kuchynka"],
+                [new Cup()]
+            ),
 
-        toalety: new Room(
-            "toalety",
-            'Vošiel si do pánskych toaliet. Do nosa ti vrazila opojná vôňa osivežujúceho prostriedku. "Už nikdy inde", pomyslel si si.',
-            ["kuchynka"]
-        )
-    },
+            kuchynka: new Room(
+                "kuchynka",
+                "Vitaj v kuchynke neobmedzenych v mikrovlnke pripravovanych pochutin. Ti narocnejsi si mozu vybrat aj nieco z dnesnej ponuky chladnicky.",
+                ["bernolak", "toalety"],
+                [new CoffeMachine()]
+            ),
 
-    inventory: {
-        capacity: 3,
-        items: [new Phone()]
-    },
+            toalety: new Room(
+                "toalety",
+                'Vošiel si do pánskych toaliet. Do nosa ti vrazila opojná vôňa osivežujúceho prostriedku. "Už nikdy inde", pomyslel si si.',
+                ["kuchynka"]
+            )
+        };
 
-    currentRoom: null
-};
+        this.inventory = {
+            capacity: 3,
+            items: [new Phone()]
+        };
 
-game.currentRoom = game.world["bernolak"];
+        this.history = [];
 
-export { game };
+        this.currentRoom = this.world["bernolak"];
+    }
+}

@@ -28,6 +28,9 @@ export class DropItem extends Command {
                 return;
             }
 
+            // save to history first
+            game.history.push(`${this._name} ${this._param}`);
+
             // drop item
             game.inventory.items.splice(game.inventory.items.indexOf(item), 1);
             room._items.push(item);

@@ -5,6 +5,9 @@ import { Describe } from "./commands/describe.js";
 import { TakeItem } from "./commands/takeitem.js";
 import { DropItem } from "./commands/dropitem.js";
 import { UseItem } from "./commands/useitem.js";
+import { Save } from "./commands/save.js";
+import { Restart } from "./commands/restart.js";
+import { Load } from "./commands/load.js";
 
 class Parser {
     constructor() {
@@ -15,7 +18,10 @@ class Parser {
             new Describe(),
             new TakeItem(),
             new DropItem(),
-            new UseItem()
+            new UseItem(),
+            new Save(),
+            new Load(),
+            new Restart()
         ];
     }
     parse(line) {

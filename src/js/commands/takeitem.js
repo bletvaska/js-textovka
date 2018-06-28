@@ -34,6 +34,9 @@ export class TakeItem extends Command {
                 return;
             }
 
+            // save to history first
+            game.history.push(`${this._name} ${this._param}`);
+
             // take item
             game.inventory.items.push(item);
             room._items.splice(room._items.indexOf(item), 1);
